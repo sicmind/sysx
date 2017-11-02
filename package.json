@@ -1,0 +1,23 @@
+{
+  "name": "sysx",
+  "version": "1.0.0",
+  "description": "HTML/Javascript based MIDI SYSEX editing tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtomasi/sysx.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mtomasi/sysx/issues"
+  },
+  "homepage": "https://github.com/mtomasi/sysx#readme",
+  "devDependencies": {
+    "webpack": "^3.8.1"
+  }
+}
