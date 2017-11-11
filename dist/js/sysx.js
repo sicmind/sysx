@@ -69,20 +69,62 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_instrument_class__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_MIDIAccess_class__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIAccess_class__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_Instrument_class__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__ = __webpack_require__(4);
 
 
 
+
+//************testing**************//
+
+//Communication Event
+//var com = new Event('com'); -> moved to Parameter
 
 navigator.requestMIDIAccess({
     sysex: true
 }).then( function(midiAccess){
-        const io = new __WEBPACK_IMPORTED_MODULE_1__sysxCore_MIDIAccess_class__["a" /* default */](midiAccess);
+        const io = new __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIAccess_class__["a" /* default */](midiAccess);
 }, this.onMIDIFailure );
 
+//let's create a few example parameters
+	var lfo = {
+		lfoshape:  new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('lfoshape'),
+		lforate:   new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('lforate'),
+		lfoamount: new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('lfoamount'),
+		lfospeed:  new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('lfospeed'),
+		lfodelay:  new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('lfodelay')
+	}
+	
+	var env1 = {
+		env1attack:  new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('env1attack'),
+		env1decay:   new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('env1decay'),
+		env1sustain: new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('env1sustain'),
+		env1release:  new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('env1release')
+	}
+	
+//and an example instrument to hold the parameters
+	const MidiKeyboard = new __WEBPACK_IMPORTED_MODULE_1__sysxCore_Instrument_class__["a" /* default */]();
+	MidiKeyboard.addParameterObject(lfo);
+	MidiKeyboard.addParameterObject(env1);
 
-const ts12 = new __WEBPACK_IMPORTED_MODULE_0__sysxCore_instrument_class__["a" /* default */]();
+//scrape the html for all controls	
+	var controls = document.getElementsByClassName('control');
+	for(let control of controls){
+		MidiKeyboard.bind_control(control,control.getAttribute('param'));
+		control.onmousedown = function(e){
+			if(e.offsetY > (control.clientHeight/2)){
+				control.parameter.value --;
+			}else{
+				control.parameter.value ++;
+			}
+			control.parameter.update();
+		}
+		control.addEventListener('com', function(){
+			control.innerHTML = control.parameter.value;
+		})
+		control.parameter.update();
+	}
 
 
 /***/ }),
@@ -90,20 +132,7 @@ const ts12 = new __WEBPACK_IMPORTED_MODULE_0__sysxCore_instrument_class__["a" /*
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Instrument{
-	constructor(){
-		
-	}
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = Instrument;
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__ = __webpack_require__(2);
 
 class MIDIAccess {
     
@@ -138,7 +167,7 @@ class MIDIAccess {
 
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -160,6 +189,73 @@ class MIDIDevice{
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = MIDIDevice;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Instrument{
+	constructor(){
+		this.parameters = [];
+	}
+	
+	addParameterObject(pObj){
+		for (let p in pObj){
+			this.parameters[p] = pObj[p];
+		}
+	}
+	
+	bind_control(control, param){
+		this.parameters[param].bind_control(control)
+		this.parameters[param].update();
+	}
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Instrument;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Parameter {
+	constructor(label){
+		this.label = label;
+		this.control = null;
+        this.com = new Event('com');
+		//randome values for testing
+        this.value = Math.floor(Math.random() * 99);
+        this.displayValue = Math.floor(Math.random() * 99);
+	}
+	
+    //connect parameter with GUI element
+	bind_control(control){
+		this.control = control;
+		control.parameter = this;
+		this.control.value = control.getAttribute('value');
+	}
+	
+	setValue(val){
+		this.value = val;
+		this.update();
+	}
+    
+    scaler(){
+        //@TODO value/dispalayvalue conversion
+    }
+	
+	update(){
+		if(this.control.value != this.value){
+			this.control.setAttribute('value', this.value)
+			this.control.dispatchEvent(this.com);
+			//this.control.innerHTML = this.value;
+		}
+	}
+	
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Parameter;
 
 
 /***/ })

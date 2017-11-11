@@ -4,9 +4,69 @@
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<title>index</title>
 	
+	<style type="text/css" media="screen">
+		@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+		body{
+			background: #2d2e30;
+		}
+		.control{
+			width:100px;
+			height:60px;
+			margin:20px;
+			padding:40px 20px 20px 20px;
+			text-align:center;
+			
+			float:left;
+		  -webkit-touch-callout: none;
+		  -webkit-user-select: none;
+		  -khtml-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+			text-transform:uppercase;
+			font-family:courier;
+			position:relative;
+			font-size:30px;
+			
+			background:#30333a;
+			background:linear-gradient(to bottom, #30333a 0%, #30333a 49%, #cedfff 50%, #30333a 51%, #30333a 100%);
+			color:#cedfff;
+			text-shadow: 0 0 1px rgba(68, 123, 229, .5), 0 0 10px #fff;
+		
+			
+		}
+		
+		.control::before{
+			content: attr(param);
+			position:absolute;
+			bottom: 0px;
+			left:0;
+			width:100%;
+			padding:4px 0px;
+
+			
+			font-size:16px;
+		}
+	</style>
+	
 </head>
 
 <body id="index" onload="">
+	
+	<div class="group" label="LFO">
+	<div class="control" value="0"  param="lfospeed"  id="lfospeed" 	></div>
+	<div class="control" value="0"  param="lforate"   id="lforate" 	></div>
+	<div class="control" value="0"  param="lfoamount" id="lfoamount" ></div>
+	<div class="control" value="0"  param="lfoshape"  id="lfoshape" 	></div>
+	<div class="control" value="0"  param="lfodelay"  id="lfodelay" 	></div>
+	</div>                          
+	<div class="control" value="0"   param="env1attack" 	></div>
+	<div class="control" value="0"   param="env1decay" 		></div>
+	<div class="control" value="0"   param="env1sustain" 	></div>
+	<div class="control" value="0"   param="env1release" 	></div>
+	
+	
+	
 	<script src="js/sysx.js" type="text/javascript" charset="utf-8"></script>
 </body>
 
