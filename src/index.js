@@ -11,8 +11,6 @@ navigator.requestMIDIAccess({
     sysex: true
 }).then( function(midiAccess){
         const io = new MIDIAccess(midiAccess);
-}, this.onMIDIFailure );
-
 //let's create a few example parameters
 	var lfo = {
 		lfoshape:  new Parameter('lfoshape'),
@@ -51,3 +49,27 @@ navigator.requestMIDIAccess({
 		})
 		control.parameter.update();
 	}
+
+    var messageWindow = document.querySelector("#messageWindow");
+    messageWindow.receive_message = function(msg){
+        console.log(msg);
+        
+        if(typeof(msg) === 'object' && msg.type == 'midimessage'){
+            msg = msg.data;
+        }
+        
+        let d = document.createElement('div');
+        d.innerHTML = msg;
+        d.classList.add("midimessage");
+        messageWindow.appendChild(d);
+        messageWindow.scrollTop = messageWindow.scrollHeight;
+    }
+    for(let i of io.listInputs()){
+        messageWindow.receive_message(i);
+    }; 
+    console.log(io.listOutputs());
+    io.inputs['nanoKEY2 KEYBOARD'].addListener(messageWindow);
+    
+}, this.onMIDIFailure );    
+    
+

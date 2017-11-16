@@ -85,8 +85,6 @@ navigator.requestMIDIAccess({
     sysex: true
 }).then( function(midiAccess){
         const io = new __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIAccess_class__["a" /* default */](midiAccess);
-}, this.onMIDIFailure );
-
 //let's create a few example parameters
 	var lfo = {
 		lfoshape:  new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */]('lfoshape'),
@@ -126,6 +124,30 @@ navigator.requestMIDIAccess({
 		control.parameter.update();
 	}
 
+    var messageWindow = document.querySelector("#messageWindow");
+    messageWindow.receive_message = function(msg){
+        console.log(msg);
+        
+        if(typeof(msg) === 'object' && msg.type == 'midimessage'){
+            msg = msg.data;
+        }
+        
+        let d = document.createElement('div');
+        d.innerHTML = msg;
+        d.classList.add("midimessage");
+        messageWindow.appendChild(d);
+        messageWindow.scrollTop = messageWindow.scrollHeight;
+    }
+    for(let i of io.listInputs()){
+        messageWindow.receive_message(i);
+    }; 
+    console.log(io.listOutputs());
+    io.inputs['nanoKEY2 KEYBOARD'].addListener(messageWindow);
+    
+}, this.onMIDIFailure );    
+    
+
+
 
 /***/ }),
 /* 1 */
@@ -140,6 +162,8 @@ class MIDIAccess {
         this.access = midiAccess;
         this.access.onStateChange = this.scan();
         this.scan();
+        this.inputs = {};
+        this.outputs = {};
     }
     
     scan(){
@@ -148,10 +172,10 @@ class MIDIAccess {
     }
         
     pollInputs(){
-        this.inputs = [];
+        this.inputs = {};
         let inputs = this.access.inputs.values();
         for (let i = inputs.next(); i && !i.done; i = inputs.next()){
-            this.inputs.push(new __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__["a" /* default */](i.value));
+            this.inputs[i.value.name] = new __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__["a" /* default */](i.value);
         }
     }
     
@@ -159,8 +183,18 @@ class MIDIAccess {
         this.outputs = [];
         let outputs = this.access.outputs.values();
         for (let i = outputs.next(); i && !i.done; i = outputs.next()){
-            this.outputs.push(new __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__["a" /* default */](i.value));
+            this.outputs[i.value.name] = new __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__["a" /* default */](i.value);
         }
+    }
+    
+    listInputs(){
+        this.scan();
+        return Object.keys(this.inputs);
+    }
+    
+    listOutputs(){
+        this.scan();
+        return Object.keys(this.outputs);  
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = MIDIAccess;
@@ -173,7 +207,7 @@ class MIDIAccess {
 "use strict";
 class MIDIDevice{
     constructor(device){
-        console.log(device);
+//        console.log(device);
         this.connection      = device.connection;
         this.manufacturer    = device.manufacturer;
         this.name            = device.name;
@@ -182,10 +216,25 @@ class MIDIDevice{
         this.state           = device.state;
         this.type            = device.type;
         this.version         = device.version;
+        device.parent       = this;
+        //this.com = new Event('com');
+        this.listeners = [];
     }
     
-    onmidimessage(msg){
-        console.log(msg);
+    addListener( obj ){
+        //obj must have a receive_messge function
+        this.listeners.push( obj );
+        console.log(this.listeners)
+    }
+    
+    removeListener( obj ){
+        this.listeners.pop( obj );
+    }
+    
+    onmidimessage( msg ){
+        for(let obj of this.parent.listeners){
+            obj.receive_message(msg);
+        }
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = MIDIDevice;

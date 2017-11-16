@@ -1,0 +1,73 @@
+@import 'DSEG-0.43/css/dseg.css';
+
+body{
+    font-family:'DSEG14-classic';
+	background: #211614;
+	color:#08d7fc;
+	text-shadow: 0 0 2px #059fa1, 0 0 15px #0f787b;
+    font-weight:400;
+}
+
+.null{
+    text-shadow:none;
+    color:#333;
+    font-weight:100;
+}
+
+.control{
+	
+	width:100px;
+	height:60px;
+	margin:20px;
+	padding:40px 20px 20px 20px;
+	text-align:center;
+	
+	float:left;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+	
+	font-family:'DSEG14-classic';
+	position:relative;
+	font-size:30px;
+	
+	background:#232323;
+	/*background:linear-gradient(to bottom, #30333a 0%, #30333a 49%, #cedfff 50%, #30333a 51%, #30333a 100%);*/
+	color:#08d7fc;
+	text-shadow: 0 0 2px #059fa1, 0 0 15px #0f787b;
+
+	
+}
+
+.control::before{
+	content: attr(param);
+	position:absolute;
+	bottom: 0px;
+	left:0;
+	width:100%;
+	padding:4px 0px;
+
+	
+	font-size:10px;
+}
+
+.messageWindow{
+    height:300px;
+    overflow-y:scroll;
+    border:solid 1px #08d7fc;
+    margin:10px 0;
+    padding:10px;
+}
+
+.midimessage{
+    font-size:12px;
+    margin:4px 0;
+    
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}

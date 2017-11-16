@@ -5,6 +5,8 @@ export default class MIDIAccess {
         this.access = midiAccess;
         this.access.onStateChange = this.scan();
         this.scan();
+        this.inputs = {};
+        this.outputs = {};
     }
     
     scan(){
@@ -13,10 +15,10 @@ export default class MIDIAccess {
     }
         
     pollInputs(){
-        this.inputs = [];
+        this.inputs = {};
         let inputs = this.access.inputs.values();
         for (let i = inputs.next(); i && !i.done; i = inputs.next()){
-            this.inputs.push(new MIDIDevice(i.value));
+            this.inputs[i.value.name] = new MIDIDevice(i.value);
         }
     }
     
@@ -24,7 +26,17 @@ export default class MIDIAccess {
         this.outputs = [];
         let outputs = this.access.outputs.values();
         for (let i = outputs.next(); i && !i.done; i = outputs.next()){
-            this.outputs.push(new MIDIDevice(i.value));
+            this.outputs[i.value.name] = new MIDIDevice(i.value);
         }
+    }
+    
+    listInputs(){
+        this.scan();
+        return Object.keys(this.inputs);
+    }
+    
+    listOutputs(){
+        this.scan();
+        return Object.keys(this.outputs);  
     }
 }
