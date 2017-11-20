@@ -1,6 +1,7 @@
 import MIDIAccess from './sysxCore/MIDIAccess.class';
 import Instrument from './sysxCore/Instrument.class';
 import Parameter from './sysxCore/Parameter.class';
+import ui from './interface/ui';
 
 //************testing**************//
 
@@ -55,7 +56,11 @@ navigator.requestMIDIAccess({
         console.log(msg);
         
         if(typeof(msg) === 'object' && msg.type == 'midimessage'){
-            msg = msg.data;
+					let r = "";
+					for(let b of msg.data){
+						r += b + ", ";
+					}
+					msg = r;
         }
         
         let d = document.createElement('div');
@@ -68,7 +73,7 @@ navigator.requestMIDIAccess({
         messageWindow.receive_message(i);
     }; 
     console.log(io.listOutputs());
-    io.inputs['nanoKEY2 KEYBOARD'].addListener(messageWindow);
+    io.inputs['IAC Driver Bus 1'].addListener(messageWindow);
     
 }, this.onMIDIFailure );    
     

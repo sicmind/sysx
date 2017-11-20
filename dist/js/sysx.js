@@ -72,6 +72,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIAccess_class__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_Instrument_class__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__interface_ui__ = __webpack_require__(5);
+
 
 
 
@@ -129,7 +131,11 @@ navigator.requestMIDIAccess({
         console.log(msg);
         
         if(typeof(msg) === 'object' && msg.type == 'midimessage'){
-            msg = msg.data;
+					let r = "";
+					for(let b of msg.data){
+						r += b + ", ";
+					}
+					msg = r;
         }
         
         let d = document.createElement('div');
@@ -142,7 +148,7 @@ navigator.requestMIDIAccess({
         messageWindow.receive_message(i);
     }; 
     console.log(io.listOutputs());
-    io.inputs['nanoKEY2 KEYBOARD'].addListener(messageWindow);
+    io.inputs['IAC Driver Bus 1'].addListener(messageWindow);
     
 }, this.onMIDIFailure );    
     
@@ -306,6 +312,13 @@ class Parameter {
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Parameter;
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__) {
+
+"use strict";
+throw new Error("Module parse failed: Unexpected token (5:1)\nYou may need an appropriate loader to handle this file type.\n| \tthis.set_device_page = function( MIDIAccess ){\n| \t\tMIDIAccess.\n| \t}\n| \t\n| \tthis.place_window = function(){");
 
 /***/ })
 /******/ ]);

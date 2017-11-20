@@ -60,11 +60,16 @@ body{
     border:solid 1px #08d7fc;
     margin:10px 0;
     padding:10px;
+		width:98%;
 }
 
 .midimessage{
     font-size:12px;
-    margin:4px 0;
+    margin:9px 0;
+		max-width:100%;
+		line-height:18px;
+		white-space: normal;
+		border-bottom:solid 1px #222;
     
 }
 
