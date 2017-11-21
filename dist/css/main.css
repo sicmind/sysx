@@ -1,11 +1,11 @@
-@import 'DSEG-0.43/css/dseg.css';
+/* @import 'DSEG-0.43/css/dseg.css';*/
 
 body{
-    font-family:'DSEG14-classic';
+    font-family:'DSEG14-classic', 'Andale Mono';
 	background: #211614;
 	color:#08d7fc;
 	text-shadow: 0 0 2px #059fa1, 0 0 15px #0f787b;
-    font-weight:400;
+    font-weight:200;
 }
 
 .null{
@@ -55,7 +55,7 @@ body{
 }
 
 .messageWindow{
-    height:300px;
+    height:400px;
     overflow-y:scroll;
     border:solid 1px #08d7fc;
     margin:10px 0;
@@ -75,4 +75,25 @@ body{
 
 ::-webkit-scrollbar { 
     display: none; 
+}
+
+
+.deviceOption{
+    padding:5px;
+     border:solid 1px #08d7fc;
+     display:inline-block;
+     margin:5px;
+}
+
+.in:before{
+    content:'input:';
+}
+
+.out:before{
+    content:'output: ';
+}
+
+.active{
+    background: #08d7fc;
+    color:white;
 }

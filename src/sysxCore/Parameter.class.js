@@ -1,11 +1,10 @@
 export default class Parameter {
-	constructor(label){
-		this.label = label;
-		this.control = null;
-        this.com = new Event('com');
-		//randome values for testing
-        this.value = Math.floor(Math.random() * 99);
-        this.displayValue = Math.floor(Math.random() * 99);
+	constructor(data){
+        for(let k of Object.keys(data)){
+            this[k] = data[k];
+        }
+        this.value = 0;
+        this.displayValue = 0;
 	}
 	
     //connect parameter with GUI element
@@ -17,7 +16,11 @@ export default class Parameter {
 	
 	setValue(val){
 		this.value = val;
-		this.update();
+		//this.update();
+	}
+    
+	getValue(){
+		return this.value;
 	}
     
     scaler(){
@@ -31,5 +34,7 @@ export default class Parameter {
 			//this.control.innerHTML = this.value;
 		}
 	}
+    
+    
 	
 }

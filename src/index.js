@@ -1,18 +1,34 @@
 import MIDIAccess from './sysxCore/MIDIAccess.class';
-import Instrument from './sysxCore/Instrument.class';
+import MIDIInstrument from './sysxCore/MIDIInstrument.class';
 import Parameter from './sysxCore/Parameter.class';
-import ui from './interface/ui';
+import TS12 from './IntrumentDefinitions/EnsoniqTS12/TS12';
+
+//Libraries
+const midispecs = require('./sysxCore/MIDISpecs.lib');
+const tsSample = require('./IntrumentDefinitions/EnsoniqTS12/sampleData.js');
 
 //************testing**************//
 
+
 //Communication Event
 //var com = new Event('com'); -> moved to Parameter
-
 navigator.requestMIDIAccess({
     sysex: true
 }).then( function(midiAccess){
-        const io = new MIDIAccess(midiAccess);
-//let's create a few example parameters
+    console.log("let's go");
+
+    const io = new MIDIAccess(midiAccess);
+    //first, lets look up the header for our instrument
+    const header = tsSample.TS_header;
+    //then construct the instrument
+    const ts12 = new TS12(header);
+    
+        for(let p of tsSample.TS_params ){
+            ts12.addParameterObject(new Parameter(p));
+        }
+        window.ts12 = ts12;
+       // ts12.addParameterObject(tsSample.TS_params);
+/*let's create a few example parameters
 	var lfo = {
 		lfoshape:  new Parameter('lfoshape'),
 		lforate:   new Parameter('lforate'),
@@ -29,7 +45,7 @@ navigator.requestMIDIAccess({
 	}
 	
 //and an example instrument to hold the parameters
-	const MidiKeyboard = new Instrument();
+	const MidiKeyboard = new MIDIInstrument();
 	MidiKeyboard.addParameterObject(lfo);
 	MidiKeyboard.addParameterObject(env1);
 
@@ -50,13 +66,44 @@ navigator.requestMIDIAccess({
 		})
 		control.parameter.update();
 	}
+*/
+    //some debuging/test tools
+    //@TODO build gui funciton lib
+       const devices = document.createElement('div');
+       devices.innerHTML = "Devices";
+       for(let i of io.listInputs() ){
+           let d = document.createElement('div');
+           d.setAttribute('device',i);
+           d.setAttribute('direction','input');
+           d.className = 'deviceOption in';
+           d.innerHTML = i;
+           d.addEventListener('click', activateDevice)
+           devices.appendChild(d);
+       }
+       
+      // devices.innerHTML += "<div class='subhead'>outputs</div>";
+       
+       for(let i of io.listOutputs() ){
+           let d = document.createElement('div');
+           d.setAttribute('device',i);
+           d.setAttribute('direction','output');
+           d.className = 'deviceOption out';
+           d.innerHTML = i;
+           d.addEventListener('click', activateDevice)
+           devices.appendChild(d);
+       }
+       
+       document.body.insertBefore(devices, document.body.firstChild);
+       
 
+       
     var messageWindow = document.querySelector("#messageWindow");
     messageWindow.receive_message = function(msg){
         console.log(msg);
-        
+        let messageType = '';
         if(typeof(msg) === 'object' && msg.type == 'midimessage'){
-					let r = "";
+					 messageType = midispecs.MidiMessageType[ msg.data[0] ] ;
+                    let r = messageType+": ";
 					for(let b of msg.data){
 						r += b + ", ";
 					}
@@ -69,11 +116,35 @@ navigator.requestMIDIAccess({
         messageWindow.appendChild(d);
         messageWindow.scrollTop = messageWindow.scrollHeight;
     }
-    for(let i of io.listInputs()){
-        messageWindow.receive_message(i);
-    }; 
-    console.log(io.listOutputs());
-    io.inputs['IAC Driver Bus 1'].addListener(messageWindow);
+
+    
+    window.log = function(msg){
+        messageWindow.receive_message(msg);
+    }
+     
+    function activateDevice(e){
+        if (e.target.classList.contains('active')){
+            if( e.target.getAttribute('direction') =='input') {
+              io.inputs[e.target.getAttribute('device')].removeListener(messageWindow);
+               }
+           if( e.target.getAttribute('direction') =='output') {
+                   io.outputs[e.target.getAttribute('device')].removeListener(messageWindow);
+                     }   
+            e.target.classList.remove('active');
+            
+            
+        }else{
+           if( e.target.getAttribute('direction') =='input') {
+             io.inputs[e.target.getAttribute('device')].addListener(messageWindow);
+              }
+           if( e.target.getAttribute('direction') =='output') {
+               io.outputs[e.target.getAttribute('device')].addListener(messageWindow);
+                 }   
+              
+             e.target.classList.add('active')
+        }
+    }
+     
     
 }, this.onMIDIFailure );    
     

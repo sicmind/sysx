@@ -17,7 +17,6 @@ export default class MIDIDevice{
     addListener( obj ){
         //obj must have a receive_messge function
         this.listeners.push( obj );
-        console.log(this.listeners)
     }
     
     removeListener( obj ){
