@@ -1,0 +1,30 @@
+#domConsole{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    padding:10px;
+    
+    
+    .messageWindow{
+        border:solid 1px #000;
+        height:300px;
+        overflow-y:scroll;
+        margin-right:20px;
+    }
+    
+    .notes{
+        .NoteOn, .NoteOff{
+            display:none;
+        }
+    }
+    
+    .cssToggle{
+        margin-top:1px;
+        display:inline-block;
+        border:solid 1px #000;
+        padding:2px 7px;
+        cursor:pointer;
+    }
+
+    
+}

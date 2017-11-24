@@ -99,20 +99,26 @@ navigator.requestMIDIAccess({
        
     var messageWindow = document.querySelector("#messageWindow");
     messageWindow.receive_message = function(msg){
+        
         console.log(msg);
+        let classname = "undefined";
         let messageType = '';
         if(typeof(msg) === 'object' && msg.type == 'midimessage'){
-					 messageType = midispecs.MidiMessageType[ msg.data[0] ] ;
-                    let r = messageType+": ";
-					for(let b of msg.data){
-						r += b + ", ";
-					}
-					msg = r;
+			 messageType = midispecs.MidiMessageType[ msg.data[0] ] ;
+            
+            
+            let r = messageType+": ";
+			for(let b of msg.data){
+				r += b + ", ";
+			}
+			msg = r;
+            
         }
         
         let d = document.createElement('div');
         d.innerHTML = msg;
         d.classList.add("midimessage");
+        d.classList.add(messageType);
         messageWindow.appendChild(d);
         messageWindow.scrollTop = messageWindow.scrollHeight;
     }

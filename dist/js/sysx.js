@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,19 +68,129 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class MIDIInstument{
+	constructor(header){
+        this.headerBytes = header;
+		this.parameters = {};
+	}
+	
+	addParameterObject(pObj){
+        this.parameters[pObj.label] = pObj;
+	}
+	
+	bind_control(control, param){
+		this.parameters[param].bind_control(control)
+		this.parameters[param].update();
+	}
+    
+    list_all_parameters(){
+        let r = []
+        for(let p in this.parameters){
+            r.push(p);
+        }  
+        return r;
+    }
+    
+    setParam(param, value){
+        this.parameters[param].setValue(value);
+        return this.parameters[param].getValue();
+    }
+    
+    getParam(param){
+       return  this.parameters[param].getValue();
+    }
+    
+    getParamAddress(param){
+        return [0x54];
+    }
+    
+    header(){
+        let r = [];
+        for(let k of Object.keys(this.headerBytes)){
+            r.push(this.headerBytes[k]);
+        }
+        return r;
+    }
+    
+    sendParam(param){
+        this.send([0xF0, this.header(), this.getParamAddress(param), this.getParam(param), 0xF7 ])
+    }
+    
+    
+    send(msg){
+        //@TODO this will connect to midi device via midimodule
+        console.log(msg);
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = MIDIInstument;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class Parameter {
+	constructor(data){
+        for(let k of Object.keys(data)){
+            this[k] = data[k];
+        }
+        this.value = 0;
+        this.displayValue = 0;
+	}
+	
+    //connect parameter with GUI element
+	bind_control(control){
+		this.control = control;
+		control.parameter = this;
+		this.control.value = control.getAttribute('value');
+	}
+	
+	setValue(val){
+		this.value = val;
+		//this.update();
+	}
+    
+	getValue(){
+		return this.value;
+	}
+    
+    scaler(){
+        //@TODO value/dispalayvalue conversion
+    }
+	
+	update(){
+		if(this.control.value != this.value){
+			this.control.setAttribute('value', this.value)
+			this.control.dispatchEvent(this.com);
+			//this.control.innerHTML = this.value;
+		}
+	}
+    
+    
+	
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Parameter;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIAccess_class__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_MIDIInstrument_class__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__IntrumentDefinitions_EnsoniqTS12_TS12__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIAccess_class__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_MIDIInstrument_class__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__IntrumentDefinitions_EnsoniqTS12_TS12__ = __webpack_require__(5);
 
 
 
 
 
 //Libraries
-const midispecs = __webpack_require__(7);
-const tsSample = __webpack_require__(8);
+const midispecs = __webpack_require__(6);
+const tsSample = __webpack_require__(7);
 
 //************testing**************//
 
@@ -174,20 +284,26 @@ navigator.requestMIDIAccess({
        
     var messageWindow = document.querySelector("#messageWindow");
     messageWindow.receive_message = function(msg){
+        
         console.log(msg);
+        let classname = "undefined";
         let messageType = '';
         if(typeof(msg) === 'object' && msg.type == 'midimessage'){
-					 messageType = midispecs.MidiMessageType[ msg.data[0] ] ;
-                    let r = messageType+": ";
-					for(let b of msg.data){
-						r += b + ", ";
-					}
-					msg = r;
+			 messageType = midispecs.MidiMessageType[ msg.data[0] ] ;
+            
+            
+            let r = messageType+": ";
+			for(let b of msg.data){
+				r += b + ", ";
+			}
+			msg = r;
+            
         }
         
         let d = document.createElement('div');
         d.innerHTML = msg;
         d.classList.add("midimessage");
+        d.classList.add(messageType);
         messageWindow.appendChild(d);
         messageWindow.scrollTop = messageWindow.scrollHeight;
     }
@@ -227,11 +343,11 @@ navigator.requestMIDIAccess({
 
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__ = __webpack_require__(4);
 
 class MIDIAccess {
     
@@ -278,7 +394,7 @@ class MIDIAccess {
 
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -317,58 +433,22 @@ class MIDIDevice{
 
 
 /***/ }),
-/* 3 */,
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-class Parameter {
-	constructor(data){
-        for(let k of Object.keys(data)){
-            this[k] = data[k];
-        }
-        this.value = 0;
-        this.displayValue = 0;
-	}
-	
-    //connect parameter with GUI element
-	bind_control(control){
-		this.control = control;
-		control.parameter = this;
-		this.control.value = control.getAttribute('value');
-	}
-	
-	setValue(val){
-		this.value = val;
-		//this.update();
-	}
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIInstrument_class__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_Parameter_class__ = __webpack_require__(1);
+
+
+class TS12 extends __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIInstrument_class__["a" /* default */] {
     
-	getValue(){
-		return this.value;
-	}
-    
-    scaler(){
-        //@TODO value/dispalayvalue conversion
-    }
-	
-	update(){
-		if(this.control.value != this.value){
-			this.control.setAttribute('value', this.value)
-			this.control.dispatchEvent(this.com);
-			//this.control.innerHTML = this.value;
-		}
-	}
-    
-    
-	
 }
-/* harmony export (immutable) */ __webpack_exports__["a"] = Parameter;
+/* harmony export (immutable) */ __webpack_exports__["a"] = TS12;
 
 
 /***/ }),
-/* 5 */,
-/* 6 */,
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -399,7 +479,7 @@ MidiMessageType: {
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports) {
 
 //this will be from a database
@@ -1551,83 +1631,6 @@ TS_controls :[
  }
 ]
 }
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIInstrument_class__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__sysxCore_Parameter_class__ = __webpack_require__(4);
-
-
-class TS12 extends __WEBPACK_IMPORTED_MODULE_0__sysxCore_MIDIInstrument_class__["a" /* default */] {
-    
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = TS12;
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class MIDIInstument{
-	constructor(header){
-        this.headerBytes = header;
-		this.parameters = {};
-	}
-	
-	addParameterObject(pObj){
-        this.parameters[pObj.label] = pObj;
-	}
-	
-	bind_control(control, param){
-		this.parameters[param].bind_control(control)
-		this.parameters[param].update();
-	}
-    
-    list_all_parameters(){
-        let r = []
-        for(let p in this.parameters){
-            r.push(p);
-        }  
-        return r;
-    }
-    
-    setParam(param, value){
-        this.parameters[param].setValue(value);
-        return this.parameters[param].getValue();
-    }
-    
-    getParam(param){
-       return  this.parameters[param].getValue();
-    }
-    
-    getParamAddress(param){
-        return [0x54];
-    }
-    
-    header(){
-        let r = [];
-        for(let k of Object.keys(this.headerBytes)){
-            r.push(this.headerBytes[k]);
-        }
-        return r;
-    }
-    
-    sendParam(param){
-        this.send([0xF0, this.header(), this.getParamAddress(param), this.getParam(param), 0xF7 ])
-    }
-    
-    
-    send(msg){
-        //@TODO this will connect to midi device via midimodule
-        console.log(msg);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = MIDIInstument;
-
 
 /***/ })
 /******/ ]);

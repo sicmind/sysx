@@ -1,0 +1,14 @@
+body{
+    font-family:sans-serif;
+    font-size:12px;
+}
+
+.active{
+    text-decoration:underline;
+}
+.in:before{
+    content:'input-> ';
+}
+.out:before{
+    content:'output-> ';
+}

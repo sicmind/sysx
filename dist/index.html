@@ -9,35 +9,35 @@
 </head>
 
 <body id="index" onload="">
-	<!-- 
-	<div class="group" label="LFO">
-	<div class="control" value="0"  param="lfospeed"  id="lfospeed" 	></div>
-	<div class="control" value="0"  param="lforate"   id="lforate" 	></div>
-	<div class="control" value="0"  param="lfoamount" id="lfoamount" ></div>
-	<div class="control" value="0"  param="lfoshape"  id="lfoshape" 	></div>
-	<div class="control" value="0"  param="lfodelay"  id="lfodelay" 	></div>
-	</div>                          
-	<div class="control" value="0"   param="env1attack" 	></div>
-	<div class="control" value="0"   param="env1decay" 		></div>
-	<div class="control" value="0"   param="env1sustain" 	></div>
-	<div class="control" value="0"   param="env1release" 	></div>
-
-   <div style="clear:both">
-		<br />||||||||||||||||||
-			<br />||||||||||||
-				<br />||||||||||||||||
-	-->			
-				<br /><br />
-				<span class="null">~~~~~~~~~~~~~~~~~~~</span>
-	</div>
 	
+	
+	<div id="domConsole">
 	<div id="messageWindow" class="lcd messageWindow">
 		
 		
 	</div>
+  	<span class="cssToggle" dest=".messageWindow" value="notes">notes</span>  
+		<span class="cssToggle" dest=".messageWindow" value="control">control</span> 
+		<span class="cssToggle" dest=".messageWindow" value="sysex">sysex</span>
+	</div>
 	
 	
 	<script src="js/sysx.js" type="text/javascript" charset="utf-8"></script>
+
+	<script type="text/javascript">
+
+		for(let t of document.querySelectorAll('.cssToggle')) {
+			t.onclick = function(){
+				let d = document.querySelector(this.getAttribute('dest'))
+				if(d.classList.contains(t.getAttribute('value'))){
+					d.classList.remove(t.getAttribute('value'));
+				}else{
+					d.classList.add(t.getAttribute('value'));
+				}
+			}
+		}
+		
+	</script>
 
 </body>
 
