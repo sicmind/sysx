@@ -27,6 +27,8 @@ navigator.requestMIDIAccess({
             ts12.addParameterObject(new Parameter(p));
         }
         window.ts12 = ts12;
+				
+		
        // ts12.addParameterObject(tsSample.TS_params);
 /*let's create a few example parameters
 	var lfo = {

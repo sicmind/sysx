@@ -1,17 +1,22 @@
 export default class MIDIInstument{
-	constructor(header){
-        this.headerBytes = header;
-		this.parameters = {};
-	}
+		constructor(header){
+	        this.headerBytes = header;
+			this.parameters = {};
+		}
 	
-	addParameterObject(pObj){
-        this.parameters[pObj.label] = pObj;
-	}
+		addParameterObject(pObj){
+	        this.parameters[pObj.label] = pObj;
+		}
 	
-	bind_control(control, param){
-		this.parameters[param].bind_control(control)
-		this.parameters[param].update();
-	}
+		bind_control(control, param){
+			this.parameters[param].bind_control(control)
+			this.parameters[param].update();
+		}
+		
+		bind_midi_input_device(device){
+			 device.addListener(this);
+			 this.device = device;
+		}
     
     list_all_parameters(){
         let r = []
@@ -49,6 +54,11 @@ export default class MIDIInstument{
     
     send(msg){
         //@TODO this will connect to midi device via midimodule
-        console.log(msg);
+			this.device.send(msg);
+      console.log(msg);
     }
+		
+		receive_message(msg){
+			
+		}
 }

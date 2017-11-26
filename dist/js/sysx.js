@@ -69,19 +69,24 @@
 
 "use strict";
 class MIDIInstument{
-	constructor(header){
-        this.headerBytes = header;
-		this.parameters = {};
-	}
+		constructor(header){
+	        this.headerBytes = header;
+			this.parameters = {};
+		}
 	
-	addParameterObject(pObj){
-        this.parameters[pObj.label] = pObj;
-	}
+		addParameterObject(pObj){
+	        this.parameters[pObj.label] = pObj;
+		}
 	
-	bind_control(control, param){
-		this.parameters[param].bind_control(control)
-		this.parameters[param].update();
-	}
+		bind_control(control, param){
+			this.parameters[param].bind_control(control)
+			this.parameters[param].update();
+		}
+		
+		bind_midi_input_device(device){
+			 device.addListener(this);
+			 this.device = device;
+		}
     
     list_all_parameters(){
         let r = []
@@ -119,8 +124,13 @@ class MIDIInstument{
     
     send(msg){
         //@TODO this will connect to midi device via midimodule
-        console.log(msg);
+			this.device.send(msg);
+      console.log(msg);
     }
+		
+		receive_message(msg){
+			
+		}
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = MIDIInstument;
 
@@ -212,6 +222,8 @@ navigator.requestMIDIAccess({
             ts12.addParameterObject(new __WEBPACK_IMPORTED_MODULE_2__sysxCore_Parameter_class__["a" /* default */](p));
         }
         window.ts12 = ts12;
+				
+		ts12.bind_midi_input_device(io.inputs['IAC Driver Bus'])		
        // ts12.addParameterObject(tsSample.TS_params);
 /*let's create a few example parameters
 	var lfo = {
@@ -369,6 +381,7 @@ class MIDIAccess {
         let inputs = this.access.inputs.values();
         for (let i = inputs.next(); i && !i.done; i = inputs.next()){
             this.inputs[i.value.name] = new __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__["a" /* default */](i.value);
+			console.log("yo");
         }
     }
     
@@ -377,6 +390,7 @@ class MIDIAccess {
         let outputs = this.access.outputs.values();
         for (let i = outputs.next(); i && !i.done; i = outputs.next()){
             this.outputs[i.value.name] = new __WEBPACK_IMPORTED_MODULE_0__MIDIDevice_class__["a" /* default */](i.value);
+			console.log(i.value);
         }
     }
     

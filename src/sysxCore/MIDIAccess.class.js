@@ -19,6 +19,7 @@ export default class MIDIAccess {
         let inputs = this.access.inputs.values();
         for (let i = inputs.next(); i && !i.done; i = inputs.next()){
             this.inputs[i.value.name] = new MIDIDevice(i.value);
+			console.log(i.value);
         }
     }
     
@@ -27,6 +28,7 @@ export default class MIDIAccess {
         let outputs = this.access.outputs.values();
         for (let i = outputs.next(); i && !i.done; i = outputs.next()){
             this.outputs[i.value.name] = new MIDIDevice(i.value);
+			console.log(i.value);
         }
     }
     
