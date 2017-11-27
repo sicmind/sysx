@@ -5,6 +5,7 @@ export default class MIDIAccess {
         this.access = midiAccess;
         this.access.onStateChange = this.scan();
         this.scan();
+		this.devices = {};
         this.inputs = {};
         this.outputs = {};
     }
@@ -18,8 +19,8 @@ export default class MIDIAccess {
         this.inputs = {};
         let inputs = this.access.inputs.values();
         for (let i = inputs.next(); i && !i.done; i = inputs.next()){
-            this.inputs[i.value.name] = new MIDIDevice(i.value);
-			console.log(i.value);
+			this.inputs[i.value.name] = new MIDIDevice(i.value);
+			//console.log(i.value);
         }
     }
     
@@ -28,7 +29,7 @@ export default class MIDIAccess {
         let outputs = this.access.outputs.values();
         for (let i = outputs.next(); i && !i.done; i = outputs.next()){
             this.outputs[i.value.name] = new MIDIDevice(i.value);
-			console.log(i.value);
+		//	console.log(i.value);
         }
     }
     

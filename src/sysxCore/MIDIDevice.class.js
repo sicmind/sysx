@@ -1,18 +1,43 @@
 export default class MIDIDevice{
-    constructor(device){
-//        console.log(device);
-        this.connection      = device.connection;
-        this.manufacturer    = device.manufacturer;
-        this.name            = device.name;
-        device.onmidimessage   = this.onmidimessage;
-        device.onstatechange   = this.onstatechange;
-        this.state           = device.state;
-        this.type            = device.type;
-        this.version         = device.version;
-        device.parent       = this;
+    constructor(label, midi_responder){
+		
+		this.label = label;
+		this.midi_responder = midi_responder;
+      //        console.log(device);
+      //  this.connection      = device.connection;
+      //  this.manufacturer    = device.manufacturer;
+      //  this.name            = device.name;
+      //->  device.onmidimessage   = this.onmidimessage;
+      //  device.onstatechange   = this.onstatechange;
+      //  this.state           = device.state;
+      //  this.type            = device.type;
+      //  this.version         = device.version;
+      //  device.parent       = this;
         //this.com = new Event('com');
         this.listeners = [];
+		this.inputs = [];
+		this.outputs = [];
     }
+	
+	addInput(input){
+		input.parent = this;
+		input.onmidimessage = this.onmidimessage;
+		//input.onstatechange = this.onstatechange;
+		this.inputs.push(input);
+	}
+	
+	removeInput(input){
+		this.inputs.pop(input);
+	}
+	
+	addOutput(output){
+		this.outputs.push(output);
+	}
+	
+	removeOutput(output){
+		this.outputs.pop(output);
+	}
+	
     
     addListener( obj ){
         //obj must have a receive_messge function
@@ -24,8 +49,10 @@ export default class MIDIDevice{
     }
     
     onmidimessage( msg ){
-        for(let obj of this.parent.listeners){
-            obj.receive_message(msg);
-        }
+		let response = {
+			device:  this.name,
+			message: msg
+		} 
+		this.parent.midi_responder(response);
     }
 }
