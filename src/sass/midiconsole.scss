@@ -19,34 +19,26 @@
         
         .midimessage:before{
             display:inline-block;
-            content:attr(type)': ';
+            content:attr(type)'->';
             font-size:10px;
+            margin-right:10px;
             font-weight:bold;
         }
     
         .NoteOn:before{
-            color:orange;
+            color:red;
         }
         
         .NoteOff:before{
-            color:red;
+            color:Crimson;
         }
         
         .ControlChange:before{
             color:blue;
         }
-    }
-     
-    
-    .notes{
-        .NoteOn, .NoteOff{
-            display:none;
-        }
-    }
-    
-    .control{
-        .ControlChange{
-            display:none;
+        
+        .PitchBend:before{
+            color:green;
         }
     }
     
@@ -59,6 +51,38 @@
     }
 
     
+}
+.notes{
+    .NoteOn, .NoteOff{
+        display:none;
+    }
+    toggle[value=notes]{
+       color:red;
+    }
+}
+
+.control{
+    .ControlChange{
+        display:none;
+    }
+    toggle[value=control]{
+       color:red;
+    }
+}
+
+.pitchbend{
+    .PitchBend{
+        display:none;
+    }
+    toggle[value=pitchbend]{
+       color:red;
+    }
+}
+
+.sysex{
+    toggle[value=sysex]{
+       color:red;
+    }
 }
 
 .show{
