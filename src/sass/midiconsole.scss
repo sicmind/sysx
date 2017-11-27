@@ -1,0 +1,66 @@
+.consoleHolder{
+    width:100%;
+    padding:10px;
+    display:none;
+    
+    .midiconsole{
+        margin-top:5px;
+        display:block;
+        border:solid 1px #000;
+        height:300px;
+        overflow-y:scroll;
+        margin-right:20px;
+     
+        .midimessage{
+            margin:1px;
+            padding:3px;
+            background:#fafafa;
+        }
+        
+        .midimessage:before{
+            display:inline-block;
+            content:attr(type)': ';
+            font-size:10px;
+            font-weight:bold;
+        }
+    
+        .NoteOn:before{
+            color:orange;
+        }
+        
+        .NoteOff:before{
+            color:red;
+        }
+        
+        .ControlChange:before{
+            color:blue;
+        }
+    }
+     
+    
+    .notes{
+        .NoteOn, .NoteOff{
+            display:none;
+        }
+    }
+    
+    .control{
+        .ControlChange{
+            display:none;
+        }
+    }
+    
+    .cssToggle{
+        margin-top:1px;
+        display:inline-block;
+        border:solid 1px #000;
+        padding:2px 7px;
+        cursor:pointer;
+    }
+
+    
+}
+
+.show{
+    display:block;
+}

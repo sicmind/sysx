@@ -1,44 +1,36 @@
+<!DOCTYPE html>
 <html>
 
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 	<title>index</title>
 	
+	<link rel="shortcut icon" href="#" type="image/x-icon">
 	<link rel="stylesheet" href="css/main.css" type="text/css" media="screen">
 
 </head>
 
 <body id="index" onload="">
 	
-	
-	<div id="domConsole">
-	<div id="messageWindow" class="lcd messageWindow">
+	<div>
+	<toggle dest=".consoleHolder" value="show">MidiConsole</toggle>
+ </div>
+
+	<div class='consoleHolder'>	
 		
-		
-	</div>
-  	<span class="cssToggle" dest=".messageWindow" value="notes">notes</span>  
-		<span class="cssToggle" dest=".messageWindow" value="control">control</span> 
-		<span class="cssToggle" dest=".messageWindow" value="sysex">sysex</span>
-	</div>
+		<div>
+	  	<toggle class="cssToggle" dest=".midiconsole" value="notes">notes</toggle>  
+			<toggle class="cssToggle" dest=".midiconsole" value="control">control</toggle> 
+			<toggle class="cssToggle" dest=".midiconsole" value="sysex">sysex</toggle>
+		</div>
 	
-	
+		<midiconsole class="midiconsole"></midiconsole>
+ </div>
+
 	<script src="js/sysx.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/gui.js" type="text/javascript" charset="utf-8"></script>
 
-	<script type="text/javascript">
-
-		for(let t of document.querySelectorAll('.cssToggle')) {
-			t.onclick = function(){
-				let d = document.querySelector(this.getAttribute('dest'))
-				if(d.classList.contains(t.getAttribute('value'))){
-					d.classList.remove(t.getAttribute('value'));
-				}else{
-					d.classList.add(t.getAttribute('value'));
-				}
-			}
-		}
-		
-	</script>
-
+  
 </body>
 
 </html>

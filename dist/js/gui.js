@@ -60,14 +60,48 @@
 /******/ 	__webpack_require__.p = "./dist/js/sysx.js";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 8:
+/***/ 7:
 /***/ (function(module, exports) {
 
+
+const functionTags = {
+    toggle: function(element){
+    		element.onclick = function(){
+    			let d = document.querySelector(this.getAttribute('dest'))
+    			if(d.classList.contains(element.getAttribute('value'))){
+    				d.classList.remove(element.getAttribute('value'));
+    			}else{
+    				d.classList.add(element.getAttribute('value'));
+    			}
+    		}
+    },
+
+    midiconsole: function(element){
+        element.receive_message = function(msg){
+            //console.log(msg);
+            this.innerHTML += `<div class="${msg.message.type} ${msg.detail.status}" device="${msg.device}" type="${msg.detail.status}">${msg.message.data}</div>`;
+            element.scrollTop = element.scrollHeight;
+        }
+        
+        window.GLOBAL_MIDI_LISTENERS.push(element);
+    }
+}
+
+var tags = [
+    'midiconsole',
+    'toggle',
+];
+
+for(t of tags){
+    for(e of document.querySelectorAll(t)){
+        functionTags[t](e);
+    }
+}
 
 
 /***/ })

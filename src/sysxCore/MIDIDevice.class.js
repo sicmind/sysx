@@ -1,9 +1,11 @@
+const midihelpers = require('./MIDIHelpers.lib');
+
 export default class MIDIDevice{
     constructor(label, midi_responder){
 		
 		this.label = label;
 		this.midi_responder = midi_responder;
-      //        console.log(device);
+      //        //console.log(device);
       //  this.connection      = device.connection;
       //  this.manufacturer    = device.manufacturer;
       //  this.name            = device.name;
@@ -17,6 +19,7 @@ export default class MIDIDevice{
         this.listeners = [];
 		this.inputs = [];
 		this.outputs = [];
+        this.midihelp = midihelpers;
     }
 	
 	addInput(input){
@@ -51,7 +54,9 @@ export default class MIDIDevice{
     onmidimessage( msg ){
 		let response = {
 			device:  this.name,
-			message: msg
+			message: msg,
+            detail: this.parent.midihelp.get_type(msg.data[0])
+         
 		} 
 		this.parent.midi_responder(response);
     }
