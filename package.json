@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "watch": "webpack --watch",
-		"start": "./node_modules/.bin/webpack-dev-server --watch"
-		
+    "start": "./node_modules/.bin/webpack-dev-server --watch"
   },
   "repository": {
     "type": "git",
@@ -22,7 +21,7 @@
   },
   "homepage": "https://github.com/mtomasi/sysx#readme",
   "devDependencies": {
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.4"
+    "webpack": "^5.16.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
