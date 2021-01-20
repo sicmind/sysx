@@ -17,5 +17,6 @@ module.exports = {
 		filename: '[name].js',
 		path: path.resolve(__dirname, 'dist/js'),
 		publicPath: './dist/js/sysx.js'
-	}
+  },
+  mode: "development"
 };
