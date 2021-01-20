@@ -1,109 +1,15 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "./dist/js/sysx.js";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ 7:
-/***/ (function(module, exports) {
-
-
-const functionTags = {
-    toggle: function(element){
-    		element.onclick = function(){
-    			let d = document.querySelector(this.getAttribute('dest'))
-    			if(d.classList.contains(element.getAttribute('value'))){
-    				d.classList.remove(element.getAttribute('value'));
-    			}else{
-    				d.classList.add(element.getAttribute('value'));
-    			}
-    		}
-    },
-
-    midiconsole: function(element){
-        element.receive_message = function(msg){
-            //console.log(msg);
-            this.innerHTML += `<div class="${msg.message.type} ${msg.detail.status}" device="${msg.device}" type="${msg.detail.status}">${msg.message.data}</div>`;
-            element.scrollTop = element.scrollHeight;
-        }
-        
-        window.GLOBAL_MIDI_LISTENERS.push(element);
-    }
-}
-
-var tags = [
-    'midiconsole',
-    'toggle',
-];
-
-for(t of tags){
-    for(e of document.querySelectorAll(t)){
-        functionTags[t](e);
-    }
-}
-
-
-/***/ })
-
-/******/ });
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/*!*********************!*\
+  !*** ./src/sysg.js ***!
+  \*********************/
+eval("\nconst functionTags = {\n    toggle: function(element){\n    \t\telement.onclick = function(){\n    \t\t\tlet d = document.querySelector(this.getAttribute('dest'))\n    \t\t\tif(d.classList.contains(element.getAttribute('value'))){\n    \t\t\t\td.classList.remove(element.getAttribute('value'));\n    \t\t\t}else{\n    \t\t\t\td.classList.add(element.getAttribute('value'));\n    \t\t\t}\n    \t\t}\n    },\n\n    midiconsole: function(element){\n        element.receive_message = function(msg){\n            //console.log(msg);\n            this.innerHTML += `<div class=\"${msg.message.type} ${msg.detail.status}\" device=\"${msg.device}\" type=\"${msg.detail.status}\">${msg.message.data}</div>`;\n            element.scrollTop = element.scrollHeight;\n        }\n        \n        window.GLOBAL_MIDI_LISTENERS.push(element);\n    }\n}\n\nvar tags = [\n    'midiconsole',\n    'toggle',\n];\n\nfor(t of tags){\n    for(e of document.querySelectorAll(t)){\n        functionTags[t](e);\n    }\n}\n\n\n//# sourceURL=webpack://sysx/./src/sysg.js?");
+/******/ })()
+;
