@@ -1,4 +1,4 @@
-
+.gitignore
 .DS_Store
 node_modules
 src/deprecated
