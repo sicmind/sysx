@@ -1,0 +1,140 @@
+:root {
+    --highlight: hsl(87, 76%, 36%);
+    --dk-gray: #2b2d2c;
+    --black: #141416;
+    --white: #ddd;
+}
+
+.loadscreen{
+    position:absolute;
+    top:0; bottom:0;
+    left:0; right:0;
+    background-color: var(--black);
+    z-index:99;
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size:12px;
+    letter-spacing: 0.5ch;
+    opacity: 1;
+    
+}
+
+.loadscreen.loaded{
+    transition: 1s;
+    z-index:-1;
+    opacity: 0;
+}
+
+body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: sans-serif;
+    font-size: 18px;
+}
+
+.container {
+    width: 800px;
+    transform: scale(80%);
+    margin: auto;
+    padding: 20px;
+    outline: solid 1px var(--dk-gray);
+}
+
+.panel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    outline: solid 1px black;
+    padding: 10px;
+    padding-top: 30px;
+    margin-bottom: 10px;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.panel:before {
+    background-color: var(--highlight);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    content: attr(id);
+    height: 20px;
+    font-size: 16px;
+    text-transform: uppercase;
+    color: var(--black);
+    font-weight: bold;
+}
+
+.control {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    border: solid 1px var(--dk-gray);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.display {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 3ch;
+    background-color: var(--dk-gray);
+    color: var(--highlight);
+    font-family: monospace;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--highlight)
+}
+
+input[type="range"],
+select {
+    appearance: none;
+    border: 1px solid var(--dk-gray);
+    padding: 8px;
+    font-size: 16px;
+    background-color: var(--black);
+    color: var(--white);
+}
+
+select {
+    min-width: 100%;
+    ;
+}
+
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb {
+    appearance: none;
+    border-radius: 0;
+    height: 100%;
+    width: 5px;
+    border: none;
+}
+
+input[type="checkbox"] {
+    max-width: 3ch;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+}
+
+.not_ready{
+    display:none
+}
