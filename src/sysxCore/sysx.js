@@ -13,7 +13,7 @@ export const SYSX = {
             }
          })
 
-        //MIDI.init()
+        MIDI.init()
         //UI element init
 
         //return device list for UI manipulation

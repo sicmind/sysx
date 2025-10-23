@@ -1,4 +1,4 @@
-/* !! Message output format to be [header],[address],[value],[eox] */
+/* !! Message output format to be an Object based on message template [header],[address],[value],[eox] */
 
 export const SchemaProcessor = {
 
@@ -24,8 +24,8 @@ export const SchemaProcessor = {
         return this.schema.tables[tablename]
     },
 
-    make_message(template, data){
-        this.msg_obj = message_factory.fetch(template, this.schema, data)
+    make_message(schema, template, data){
+        this.msg_obj = message_factory.fetch(template, schema, data)
         return this.msg_obj
     },
 }
@@ -46,14 +46,18 @@ const message_factory = {
     },
 
     fetch(template_name, schema = null, data = null){
+        this.error = []
         this.message = []
         this.current = new Array()
         this.schema = schema
         this.data = data
         this.valueIDX = 0
+        
         this.parse_template(template_name)
+        //wrap up
         this.message.push(this.current)
-        return {start: this.message[0], end: this.message[1]}
+        return this.message
+        //return {start: this.message[0], end: this.message[1]}
     },
 
     parse_template(template_name){
@@ -65,7 +69,7 @@ const message_factory = {
                 this.process_type(component)
             })
         } catch (err) { 
-            SchemaProcessor.error.push(`Cannot process message template ${err}`)
+            this.error.push(`Cannot process message template ${err}`)
         } 
     },
 
@@ -93,6 +97,7 @@ const message_factory = {
 
         switch(type){
             case 'partial':
+
                this.parse_template(name)
             break;
             

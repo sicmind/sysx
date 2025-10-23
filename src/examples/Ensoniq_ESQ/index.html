@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="resources/controls.css">
+
+
+</head>
+
+<body>
+
+    <div class="panel">
+        <div id="osc1" class="group">
+            <div class="group-label">OSC1</div>
+            <label for="osc1_octave">OSC1 Octave<input class="control" type="range" name="osc1_octave" value=""
+                    id="osc1_octave"></label>
+            <label for="osc1_semi">OSC1 semi<input class="control" type="range" name="osc1_semi" value=""
+                    id="osc1_semi"></label>
+            <label for="osc1_fine">OSC1 Fine Tune<input class="control" type="range" name="osc1_fine" value=""
+                    id="osc1_fine"></label>
+            <label for="osc1_wave">OSC 1 Wave
+                <select class="control" name="osc1_wave" id="OSC1 Wave" onchange="" size="1">
+                    <option value="SAW">SAW</option>
+                    <option value="SQUARE">SQUARE</option>
+                </select></label>
+            <label for="osc1_mod1src">OSC1 Mod1 Source
+                <select class="control" name="osc1_mod1src" id="osc1_mod1src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select></label>
+            <label for="osc1_mod1amt">OSC1 Mod1 Amount<input class="control" type="range" name="osc1_mod1amt" value=""
+                    id="osc1_mod1amt"></label>
+            <label for="osc1_mod2src">OSC1 mod2 Source
+                <select class="control" name="osc1_mod2src" id="osc1_mod2src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select></label>
+            <label for="osc1_mod2amt">OSC1 Mod2 Amount<input class="control" type="range" name="osc1_mod2amt" value=""
+                    id="osc1_mod2amt"></label>
+        </div>
+
+        <div id="dca1" class="group">
+            <div class="group-label">DCA1</div>
+            <label for="dca1_l">DCA1 l<input class="control" type="range" name="dca1_l" value="" id="dca1_l"></label>
+            <label for="dca1_output">DCA1 active<input class="control" type="checkbox" name="dca1_output" value=""
+                    id="dca1_output"></label>
+            <label for="dca1_mod1src">DCA1 Mod1 Source
+                <select class="control" name="dca1_mod1src" id="dca1_mod1src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select></label>
+            <label for="dca1_mod1amt">DCA1 Mod1 Amount<input class="control" type="range" name="dca1_mod1amt" value=""
+                    id="dca1_mod1amt"></label>
+            <label for="dca1_mod2src">DCA1 mod2 Source
+                <select class="control" name="dca1_mod2src" id="dca1_mod2src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select> </label>
+            <label for="dca1_mod2amt">DCA1 mod2 Amount<input class="control" type="range" name="dca1_mod2amt" value=""
+                    id="dca1_mod2amt"></label>
+        </div>
+
+        <div id="filter" class="group">
+            <div class="group-label">Filter</div>
+            <label for="filter_cutoff">Filter Cutoff<input class="control" type="range" name="filter_cutoff" value="" id="filter_cutoff"></label>
+            <label for="filter_q">Filter q<input class="control" type="range" name="filter_q" value="" id="filter_q"></label>
+            <label for="filter_mod1src">Filter Mod1 Source
+                <select class="control" name="filter_mod1src" id="filter_mod1src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select></label>
+            <label for="filter_mod1amt">Filter Mod1 Amount<input class="control" type="range" name="filter_mod1amt" value=""
+                    id="filter_mod1amt"></label>
+            <label for="filter_mod2src">Filter mod2 Source
+                <select class="control" name="filter_mod2src" id="filter_mod2src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select></label>
+            <label for="filter_mod2amt">Filter Mod2 Amount<input class="control" type="range" name="filter_mod2amt" value=""
+                    id="filter_mod2amt"></label>
+        </div>
+
+        <div id="lfo1" class="group">
+            <div class="group-label">LFO1</div>
+            <label for="lfo1_rate">LFO1 rate<input class="control" type="range" name="lfo1_rate" value=""
+                    id="lfo1_rate"></label>
+            <label for="lfo1_wave">LFO1 Wave
+                <select class="control" name="lfo1_wave" id="LFO1 Wave" onchange="" size="1">
+                    <option value="SAW">SAW</option>
+                    <option value="SQUARE">SQUARE</option>
+                </select></label>
+            <label for="lfo1_reset">LFO1 Reset<input class="control" type="checkbox" name="lfo1_reset" value="" id="lfo1_reset"></label>
+            <label for="lfo1_human">LFO1 Humanize<input class="control" type="checkbox" name="lfo1_human" value=""
+                    id="lfo1_human"></label>
+            <label for="lfo1_l1">LFO1 l1<input class="control" type="range" name="lfo1_l1" value=""
+                    id="lfo1_l1"></label>
+            <label for="lfo1_delay">LFO1 Delay<input class="control" type="range" name="lfo1_delay" value="" id="lfo1_delay"></label>
+            <label for="lfo1_l2">LFO1 l2<input class="control" type="range" name="lfo1_l2" value=""
+                    id="lfo1_l2"></label>
+            <label for="lfo1_mod1src">LFO1 Mod1 Source
+                <select class="control" name="lfo1_mod1src" id="lfo1_mod1src" onchange="" size="1">
+                    <option value="LFO1">LFO1</option>
+                    <option value="ENV1">ENV1</option>
+                </select>
+            </label>
+        </div>
+
+        <div id="env1" class="group">
+            <div class="group-label">ENV1</div>
+            <label for="env1_l1">ENV1 L1<input class="control" type="range" name="env1_l1" value="" id="env1_l1" /></label>
+            <label for="env1_l2">ENV1 L2<input class="control" type="range" name="env1_l2" value="" id="env1_l2" /></label>
+            <label for="env1_l3">ENV1 L3<input class="control" type="range" name="env1_l3" value="" id="env1_l3" /></label>
+            <label for="env1_t1">ENV1 T1<input class="control" type="range" name="env1_t1" value="" id="env1_t1" /></label>
+            <label for="env1_lv">ENV1 LV<input class="control" type="range" name="env1_lv" value="" id="env1_lv" /></label>
+            <label for="env1_t1v">ENV1 T1V<input class="control" type="range" name="env1_t1v" value="" id="env1_t1v" /></label>
+            <label for="env1_t2">ENV1 T2<input class="control" type="range" name="env1_t2" value="" id="env1_t2" /></label>
+            <label for="env1_t3">ENV1 T3<input class="control" type="range" name="env1_t3" value="" id="env1_t3" /></label>
+            <label for="env1_t4">ENV1 T4<input class="control" type="range" name="env1_t4" value="" id="env1_t4" /></label>
+            <label for="env1_tk">ENV1 Tk<input class="control" type="range" name="env1_tk" value="" id="env1_tk" /></label>
+
+            <div class="col"><label for="env1_tmpl">Template
+                    <select name="env1_tmpl" id="env1_tmpl" onchange="" size="1">
+                        <option value="option1">All On</option>
+                        <option value="option2">Piano</option>
+                            <option value="option2">Percussion</option>
+                        <option value="option2">Silence</option>
+                    </select></label></div>
+
+        </div>
+    </div>
+
+    <script src="js/main.js" type="module"></script>
+
+
+</body>
+
+</html>

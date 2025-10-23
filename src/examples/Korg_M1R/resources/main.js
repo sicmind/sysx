@@ -1,9 +1,11 @@
 import { Schema } from './schema.js'
-import { SYSX_UI } from '../../../sysxCore/sysx_ui.js'
+/*
+import { SYSX_UI } from '../../../../../sysx_ui/sysx_ui.js'
 
 SYSX_UI.register([
   'port_manager',
 ])
+*/
 
 const config = [{
   name: 'm1r',
@@ -34,7 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 const ready = ( devices ) => {
     document.querySelector('.loadscreen').classList.add('loaded')
     devices['m1r'].ping()
-    devices['m1r'].register_controls( document.querySelectorAll('.control'))
+    devices['m1r'].send('send_parameter', { address: 'basic_oscMode', page:1, value:1 })
+    //devices['m1r'].register_controls( document.querySelectorAll('.control'))
 }
 
 //! If 'osc_mode' changes, we need to remap the 'page' prop of all parameters

@@ -17,23 +17,27 @@ export const MIDIEnvironment = {
 
     midi_filter: [ status_codes.system, status_codes.noteOff ],
 
-    init: (access) => {
-        navigator.requestMIDIAccess({sysex:true}, ).then( (MIDIAccess) => {
-        MIDI_Environment.build(MIDIAccess)
-        })
+    init: () => {
+        navigator.requestMIDIAccess({sysex:true}).then( MIDIEnvironment.build, MIDIEnvironment.on_access_fail)
+    },
+
+    on_access_fail(err){
+        console.error(err)
     },
 
     build(access) {
-        MIDI_Environment.access = access
-        MIDI_Environment.make_io_lists()
+        //console.log(access)
+        MIDIEnvironment.access = access
+        MIDIEnvironment.make_io_lists()
         //testing
-        //MIDI_Environment.toggle_input(MIDI_Environment.available_inputs[3])
-        //MIDI_Environment.toggle_output(MIDI_Environment.available_outputs[10])
+        //MIDIEnvironment.toggle_input(MIDIEnvironment.available_inputs[3])
+        //MIDIEnvironment.toggle_output(MIDIEnvironment.available_outputs[10])
     },
 
     make_io_lists: () =>{
-        MIDI_Environment.access.inputs.forEach( i => { MIDI_Environment.available_inputs.push(i) })
-        MIDI_Environment.access.outputs.forEach( o => { MIDI_Environment.available_outputs.push(o) })
+        MIDIEnvironment.access.inputs.forEach( i => { MIDIEnvironment.available_inputs.push(i) })
+        MIDIEnvironment.access.outputs.forEach( o => { MIDIEnvironment.available_outputs.push(o) })
+
     },
     
     toggle_input(input){
@@ -41,30 +45,30 @@ export const MIDIEnvironment = {
         if(input.onmidimessage != null){
             input.onmidimessage = null
         } else {
-            input.onmidimessage = MIDI_Environment.handle_midi_input
+            input.onmidimessage = MIDIEnvironment.handle_midi_input
         }
     },
 
     toggle_output(output){
         console.log(output.name)
-        if (MIDI_Environment.active_outputs.includes(output)){
-            MIDI_Environment.active_outputs.remove(output)
+        if (MIDIEnvironment.active_outputs.includes(output)){
+            MIDIEnvironment.active_outputs.remove(output)
         } else {
-            MIDI_Environment.active_outputs.push(output)
+            MIDIEnvironment.active_outputs.push(output)
         }
     },
 
     handle_midi_input(msg){
-        if(!MIDI_Environment.midi_filter.includes(msg.data[0] >> 4)) {
+        if(!MIDIEnvironment.midi_filter.includes(msg.data[0] >> 4)) {
             // console.log(msg.data)
-            //MIDI_Environment.send(msg.data)
+            //MIDIEnvironment.send(msg.data)
                 //m1.parameterChange(1,12,1,127)
                 //m1.parameterChange(2,14,126,127)
         }
     },
 
     send(msg){
-        MIDI_Environment.active_outputs.forEach( o => {
+        MIDIEnvironment.active_outputs.forEach( o => {
             //console.log(o.name)
             o.send(msg)
         })
