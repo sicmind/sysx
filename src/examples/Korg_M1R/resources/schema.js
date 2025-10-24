@@ -6,14 +6,14 @@ export const Schema = {
     DEVICEID: 0x19,
     EOX: 0xF7,
     messages: {
-        send_parameter:{ type: 'sysex',  template: 'PARAMETER_CHANGE', address: 'parameters' }
+        send_parameter:{ type: 'sysex',  template: 'PARAMETER_CHANGE', source: 'parameters' }
     },
     message_templates: {
         HEADER: "EXCLUSIVE\nMANUFACTURERID\nMESSAGE_FORMAT CHANNEL\nDEVICEID",
         FOOTER: "EOX",
-        PROGRAM_PARAMETER_REQUEST: "[HEADER]\n0x10\nEOX",
-        ALL_PROGRAM_PARAMETER_REQUEST: "[HEADER]\n0x1C\nEOX",
-        PARAMETER_CHANGE: "[HEADER]\n0x41\n{address}\n*Value*\nEOX"
+        PROGRAM_PARAMETER_REQUEST: "[HEADER]\n0x10\n[FOOTER]",
+        ALL_PROGRAM_PARAMETER_REQUEST: "[HEADER]\n0x1C\n[FOOTER]",
+        PARAMETER_CHANGE: "[HEADER]\n0x41\n{page}\n{position}\n*Value*\n[FOOTER]"
     },
     parameters: {
         basic_oscMode: {

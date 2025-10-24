@@ -5,6 +5,8 @@ export class MIDIDevice {
         this.config = config
         this.schema = config.schema
         this.channel = config.defaultChannel
+
+        this.message_objects = {}
     }
 
     ping(){
@@ -17,25 +19,40 @@ export class MIDIDevice {
         })
     }
 
-    send( message , ...data ){
+    send( message_type, message_name, data ){
+        
         //verify command exists in spec
-        const msg = this.schema.messages[message] || 0
-        if(msg === 0 ){
+        const req = this.schema.messages[message_type] || 0
+        if(req === 0 ){
             console.log('error')
             return
         }
-        console.log('INCOMING REQUEST')
-        console.table(msg)
+
+       
         //process message template if not already
-        if( msg.template){
-            console.log('MAKE MESSAGE')
-            console.table(SP.make_message(this.schema, msg.template, data))
+        if(!this.message_objects[message_name]){
+            
+            const message_details = {
+                ...req,
+                name: message_name,
+                ...this.schema[req.source][message_name],
+                ...data
+            }
+            let msg_obj = SP.make_message(message_details, this.schema)
+            this.message_objects[message_name]
+            console.table(msg_obj)
+        } else {
+            let msg_obj = {...this.message_objects[message_name], ...data}
+            console.table(msg_obj)
         }
+            
+        //if exists, just update incomming values 
+        
+        //else we need to create a new one
+
         //change any values that need changing
         //send over midi
-        console.log('ORIGINAL DATA')
-        console.table(data)
-        
-        //console.log(SP.make_message(template,))
+
     }
+
 } 

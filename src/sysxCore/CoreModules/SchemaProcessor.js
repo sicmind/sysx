@@ -24,8 +24,8 @@ export const SchemaProcessor = {
         return this.schema.tables[tablename]
     },
 
-    make_message(schema, template, data){
-        this.msg_obj = message_factory.fetch(template, schema, data)
+    make_message(details, schema){
+        this.msg_obj = message_factory.fetch(details, schema)
         return this.msg_obj
     },
 }
@@ -45,25 +45,22 @@ const message_factory = {
         console.log(`Oops: ${err}`)
     },
 
-    fetch(template_name, schema = null, data = null){
+    fetch(details, schema){
         this.error = []
-        this.message = []
-        this.current = new Array()
+        this.message = {}
+        this.current
         this.schema = schema
-        this.data = data
-        this.valueIDX = 0
+        this.data = details
         
-        this.parse_template(template_name)
+        this.parse_template(details.template)
         //wrap up
-        this.message.push(this.current)
+        //this.message.push(this.current)
         return this.message
         //return {start: this.message[0], end: this.message[1]}
     },
 
     parse_template(template_name){
-         
-        const template = this.schema.message_templates[template_name]
-        
+        const template = this.schema.message_templates[template_name] 
         try{
             template.split(/\r?\n/).forEach( component => {
                 this.process_type(component)
@@ -89,44 +86,42 @@ const message_factory = {
     },
 
     process_type( component ){
-        //console.log(`incoming: ${component}`)
        
 
         const {type, name} =   this.determine_type(component)
-        
 
         switch(type){
             case 'partial':
-
+               this.message[name] = new Array()
+    
+               this.current = name
                this.parse_template(name)
             break;
             
             case 'variable': 
-               //console.log(`${name} ${this.data[name]}`)
                if(this.data[name] === undefined){
                 SchemaProcessor.error.push(`MESSAGE FACTORY: Expecting a value "${name}"`)
                } else {
-               this.current.push(this.data[name])
+               
+               this.message[name] = new Array()
+               this.message[name].push(this.data[name])
                }
             break;
 
             case 'pair':
-               this.process_pair(name)
+                this.process_pair(name)
             break;
 
             case 'hex':
-                this.current.push(parseInt(name, 16))
+                this.message[this.current].push(parseInt(name, 16))
             break;
 
             case 'value':
-                this.message.push(this.current)
-                this.valueIDX = this.message.length
-                this.current = []
+                this.message[name] = undefined
             break;
 
             default:
-                this.current.push(this.schema[name])
-                //console.log(`${name}: ${this.schema[name]}`)
+                this.message[this.current].push(this.schema[name])
             break;
         }
     },
@@ -156,8 +151,7 @@ const message_factory = {
         const low = nibbles[1]
         const combined = high | low
 
-        this.current.push(combined)
-        //console.log(`${pair}: ${nibbles} =>to be squashed`)
+        this.message[this.current].push(combined)
     }
 }
 

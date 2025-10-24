@@ -36,7 +36,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 const ready = ( devices ) => {
     document.querySelector('.loadscreen').classList.add('loaded')
     devices['m1r'].ping()
-    devices['m1r'].send('send_parameter', { address: 'basic_oscMode', page:1, value:1 })
+    devices['m1r'].send('send_parameter', 'basic_oscMode', { page:1, value:1 })
+    devices['m1r'].send('send_parameter', 'basic_oscMode', { page:2, value:1 })
+    devices['m1r'].send('send_parameter', 'basic_oscMode', { position:7, value:1 })
     //devices['m1r'].register_controls( document.querySelectorAll('.control'))
 }
 
