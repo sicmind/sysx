@@ -13,7 +13,7 @@ export const Schema = {
         FOOTER: "EOX",
         PROGRAM_PARAMETER_REQUEST: "[HEADER]\n0x10\n[FOOTER]",
         ALL_PROGRAM_PARAMETER_REQUEST: "[HEADER]\n0x1C\n[FOOTER]",
-        PARAMETER_CHANGE: "[HEADER]\n0x41\n{page}\n{position}\n*Value*\n[FOOTER]"
+        PARAMETER_CHANGE: "[HEADER]\n0x41\n{page}\n{position}\n{value}\n[FOOTER]"
     },
     parameters: {
         basic_oscMode: {
@@ -38,6 +38,7 @@ export const Schema = {
             page: 1,
             position: 8,
             valtype: "table",
+            table: 'multisounds',
             range: [0 - 63]
         },
         osc1_level: {
@@ -57,6 +58,7 @@ export const Schema = {
             page: 2,
             position: 8,
             valtype: "table",
+            table: 'multisounds',
             range: [0 - 63]
         },
         osc2_level: {
@@ -183,7 +185,7 @@ export const Schema = {
     },
 
     tables: {
-        multiwaves: {
+        multisounds: {
             0: "00: Piano",
             1: "01: E. Piano 1",
             2: "02: E. Piano 2",

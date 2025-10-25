@@ -1,6 +1,8 @@
 import { MIDIDevice } from "./CoreClasses/MIDIDeviceClass.js"
 import { MIDIEnvironment as MIDI } from "./CoreModules/MIDIEnvironment.js"
-import { UIController } from "./CoreModules/UIController.js"
+import { ValueTools } from "./Utilities/ValueTools.utl.js"
+
+//import { UIController } from "./CoreModules/UIController.js"
 
 
 export const SYSX = {
@@ -24,10 +26,4 @@ export const SYSX = {
     },
 }
 
-export const Utilities = {
-
-}
-
-export const SYXFileProcessor = {
-
-}
+export { ValueTools }

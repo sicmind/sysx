@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
     <link rel="stylesheet" href="./resources/style.css">
     <script src="./resources/main.js" type="module"></script>
 </head>
+
 <body>
     <div class="loadscreen">M1R Station</div>
-    
+
     <!-- temp 
     <sysx-port_manager></sysx-port_manager>
     !temp -->
-    
+
     <div class="container">
         <div class="panel" id="info">
             <div class="display" id="patchNumber">I00</div>
@@ -51,13 +53,12 @@
             <div class="control" data-bind="osc1_multisound">
                 <div class="label">Multi sound</div>
                 <select name="osc1-mutlisound-select" id="osc1-multisound-select" data-provider="true">
-                    <option value="0">Piano</option>
-                    <option value="1">E.Piano</option>
                 </select>
             </div>
             <div class="control" data-bind="osc1_level">
                 <div class="label">osc1 Level</div>
-                <input type="range" min="0" max="99" value="84" id="osc1-level-select" name="osc1-level-select" data-provider="true">
+                <input type="range" min="0" max="99" value="84" id="osc1-level-select" name="osc1-level-select"
+                    data-provider="true">
                 <div class="display" id="osc1-level-display">84</div>
             </div>
             <div class="control" data-bind="osc1_octave">
@@ -70,45 +71,49 @@
             </div>
         </div>
 
-        <div class="not_ready">
-         <div class="panel" id="osc2">
-            <div class="control" data-bind="osc2_interval">
-                <div class="label">Interval</div>
-                <input type="range" min="-12" max="12" id="osc2-interval-select" name="osc2-interval-select" data-provider="true">
-                <div class="display" id="osc2-interval-display">0</div>
+        <div class="">
+            <div class="panel" id="osc2">
+                <div class="control" data-bind="osc2_interval">
+                    <div class="label">Interval</div>
+                    <input type="range" min="-12" max="12" id="osc2-interval-select" name="osc2-interval-select"
+                        data-provider="true">
+                    <div class="display" id="osc2-interval-display">0</div>
+                </div>
+                <div class="control" data-bind="osc2_detune">
+                    <div class="label">Detune</div>
+                    <input type="range" min="-12" max="12" id="osc2-detune-select" name="osc2-detune-select"
+                        data-provider="true">
+                    <div class="display" id="osc2-detune-display">0</div>
+                </div>
+                <div class="control" data-bind="osc2_delayStart">
+                    <div class="label">Delay</div>
+                    <input type="range" min="0" max="99" id="osc2-delay-select" name="osc2-delay-select"
+                        data-provider="true">
+                    <div class="display" id="osc2-delay-display">0</div>
+                </div>
+                <div class="control" data-bind="osc2_multisound">
+                    <div class="label">Multi sound</div>
+                    <select name="osc2-mutlisound-select" id="osc2-multisound-select" data-provider="true">
+                    </select>
+                </div>
+                <div class="control" data-bind="osc2_level">
+                    <div class="label">osc2 Level</div>
+                    <input type="range" min="0" max="99" value="84" id="osc2-level-select" name="osc2-level-select"
+                        data-provider="true">
+                    <div class="display" id="osc2-level-display">84</div>
+                </div>
+                <div class="control" data-bind="osc2_octave">
+                    <div class="label">Octave</div>
+                    <select name="osc2-octave-select" id="osc2-octave-select" data-provider="true">
+                        <option value="1">4'</option>
+                        <option value="0" selected="true">8'</option>
+                        <option value="-1">16'</option>
+                    </select>
+                </div>
             </div>
-            <div class="control" data-bind="osc2_detune">
-                <div class="label">Detune</div>
-                <input type="range" min="-12" max="12" id="osc2-detune-select" name="osc2-detune-select" data-provider="true">
-                <div class="display" id="osc2-detune-display">0</div>
-            </div>
-            <div class="control" data-bind="osc2_delayStart">
-                <div class="label">Delay</div>
-                <input type="range" min="0" max="99" id="osc2-delay-select" name="osc2-delay-select" data-provider="true">
-                <div class="display" id="osc2-delay-display">0</div>
-            </div>
-            <div class="control" data-bind="osc2_multisound">
-                <div class="label">Multi sound</div>
-                <select name="osc2-mutlisound-select" id="osc2-multisound-select" data-provider="true">
-                    <option value="0">Piano</option>
-                </select>
-            </div>
-            <div class="control" data-bind="osc2_level">
-                <div class="label">osc2 Level</div>
-                <input type="range" min="0" max="99" value="84" id="osc2-level-select" name="osc2-level-select" data-provider="true">
-                <div class="display" id="osc2-level-display">84</div>
-            </div>
-            <div class="control" data-bind="osc2_octave">
-                <div class="label">Octave</div>
-                <select name="osc2-octave-select" id="osc2-octave-select" data-provider="true">
-                    <option value="1">4'</option>
-                    <option value="0" selected="true">8'</option>
-                    <option value="-1">16'</option>
-                </select>
-            </div>
-        </div>
         </div>
     </div>
 
 </body>
+
 </html>

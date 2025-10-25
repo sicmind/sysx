@@ -13,14 +13,15 @@ export class MIDIDevice {
         console.log( `${this.config.device} is ready on channel ${this.channel}`)
     }
     
-    register_controls( ElementList ){
-        ElementList.forEach( el => {
-            //console.log(el)
-        })
+    get_parameter_detail( parameter_name ){
+        return this.schema.parameters[parameter_name]
     }
 
-    send( message_type, message_name, data ){
-        
+    get_table_data( table_name ){
+        return {...this.schema.tables[table_name]}
+    }
+
+    get_message_object( message_type, message_name , data ){
         //verify command exists in spec
         const req = this.schema.messages[message_type] || 0
         if(req === 0 ){
@@ -40,18 +41,11 @@ export class MIDIDevice {
             }
             let msg_obj = SP.make_message(message_details, this.schema)
             this.message_objects[message_name]
-            console.table(msg_obj)
-        } else {
+            return msg_obj
+        } else { //if exists, just update incomming values 
             let msg_obj = {...this.message_objects[message_name], ...data}
-            console.table(msg_obj)
+            return msg_obj
         }
-            
-        //if exists, just update incomming values 
-        
-        //else we need to create a new one
-
-        //change any values that need changing
-        //send over midi
 
     }
 
