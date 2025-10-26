@@ -13,6 +13,7 @@ const config = [{
   device: 'Korg M1R',
   schema: Schema,
   parameterChange: 'PARAMETER_CHANGE',
+  parameter_details: 'parameters',
   defaultChannel: 2,
   method: 'systemExclusive'
 }]
@@ -71,9 +72,11 @@ const ready = ( devices ) => {
 
 const handle_value_change = ( provider ) => {
   //! modify value
+  provider.value_mod = ValueTools.split_to_nibbles(provider.value).flat()
+  //console.log(...provider.value_mod)
   const data = {
     param: provider.parameter_name,
-    value: ValueTools.split_to_nibbles(provider.value),
+    value: provider.value_mod,
     ...provider.details
   }
   //console.table(data)
@@ -81,11 +84,12 @@ const handle_value_change = ( provider ) => {
 }
 
 const temp_view_message = ( msg) =>{
-    let arr = []
-    for( let i in msg){
-      arr = arr.concat(msg[i])
-    }
-    console.log([...arr])
+    //msg.value = msg.value.flat()
+    let output = [...msg.HEADER, ...msg.page, ...msg.position, ...msg.value.flat(), ...msg.FOOTER]
+    
+    //console.table(msg)
+    console.log(output)
+    SYSX.send_raw(output)
 }
 
 //! If 'osc_mode' changes, we need to remap the 'page' prop of all parameters

@@ -24,6 +24,10 @@ export const SYSX = {
         }
         
     },
+
+    send_raw(msg){
+        MIDI.send(msg)
+    }
 }
 
 export { ValueTools }

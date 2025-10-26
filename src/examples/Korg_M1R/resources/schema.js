@@ -5,7 +5,7 @@ export const Schema = {
     CHANNEL: 0x01,
     DEVICEID: 0x19,
     EOX: 0xF7,
-    messages: {
+    messages: { ///!todo move this into main.js. should not be schema data
         send_parameter:{ type: 'sysex',  template: 'PARAMETER_CHANGE', source: 'parameters' }
     },
     message_templates: {
@@ -16,7 +16,7 @@ export const Schema = {
         PARAMETER_CHANGE: "[HEADER]\n0x41\n{page}\n{position}\n{value}\n[FOOTER]"
     },
     parameters: {
-        basic_oscMode: {
+        basic_osc_mode: {
             label: "Mode",
             page: 0,
             position: 8,
@@ -85,7 +85,7 @@ export const Schema = {
             valtype: "twoscompliment",
             range: [-50, 50]
         },
-        osc2_delayStart: {
+        osc2_delay_start: {
             page: 2,
             position: 15,
             valtype: "default",

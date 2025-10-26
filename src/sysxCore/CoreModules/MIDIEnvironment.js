@@ -30,8 +30,8 @@ export const MIDIEnvironment = {
         MIDIEnvironment.access = access
         MIDIEnvironment.make_io_lists()
         //testing
-        //MIDIEnvironment.toggle_input(MIDIEnvironment.available_inputs[3])
-        //MIDIEnvironment.toggle_output(MIDIEnvironment.available_outputs[10])
+        MIDIEnvironment.toggle_input(MIDIEnvironment.available_inputs[3])
+        MIDIEnvironment.toggle_output(MIDIEnvironment.available_outputs[10])
     },
 
     make_io_lists: () =>{
